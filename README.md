@@ -11,32 +11,37 @@ One key property of these circuits is **logic depth**, which tells us **how many
 As semiconductor technology scales down (from **180nm → 14nm chips**), circuits become more complex and harder to analyze.  
 Traditionally, engineers estimate logic depth and timing through **manual simulations**, which are slow and resource-intensive.  
 
-👉 This project applies **Machine Learning (ML)** to predict:  
-- **Logic Depth** (circuit complexity)  
-- **Propagation Delay** (signal travel time)  
-- **Slack Violations** (timing safety check)  
+## PROJECT OBJECTIVE  
+Develop ML models that:  
+  - Predict **logic depth** across multiple technology nodes.  
+  - Estimate **propagation delays** (timing analysis).  
+  - Classify **slack violations** (timing reliability check).
 
 This makes the design process **faster, smarter, and more automated**, helping engineers build efficient chips and paving the way for smarter applications—even in fields like **biomedical device circuits**.  
 
-## PROJECT OBJECTIVE  
-- Develop ML models that:  
-  ✅ Predict **logic depth** across multiple technology nodes.  
-  ✅ Estimate **propagation delays** (timing analysis).  
-  ✅ Classify **slack violations** (timing reliability check).
-
 ## Code 1 – Logic Depth Prediction
-**Purpose:** Estimate how deep the logic chain is.
+**Purpose:**
+- This code uses machine learning regression models (Random Forest and Gradient Boosting) to estimate the logic depth of a digital circuit.
+- Logic depth means how many layers of logic gates an input signal must pass through before reaching the output.
+- A deeper logic chain usually increases the delay and may impact the speed of the circuit.
+
 **Outcome:**
-- Regression models (RF, GBM).
-- Feature importance ranking.
-- Predicts depth across 14nm → 180nm nodes.
+- Trains ML models on a dataset of logic features.
+- Compares performance of Random Forest vs Gradient Boosting using metrics like MAE, MSE, and R² score.
+- Identifies which circuit features contribute most to logic depth across 14nm → 180nm nodes.
+- Generates predictions on new unseen datasets, helping in early design evaluation.
 
 ## Code 2 – Propagation Delay Prediction
-**Purpose:** Estimate how long signals take between registers.
+**Purpose:**
+This code predicts the propagation delay of circuits, i.e., how long it takes for a signal to travel from one register to another (register-to-flip-flop delay).
+- Propagation delay directly affects the operating frequency of the chip.
+- Predicting it early helps in timing closure and avoiding slow designs.
+
 **Outcome:**
-- Accurate delay regression.
-- Visualizes predicted vs. actual delay.
-- Early insights for timing closure.
+- Uses ML regression (Random Forest and Gradient Boosting) to model timing delays.
+- Provides error metrics (MAE, MSE, R²) for accuracy assessment.
+- Visualizes predicted vs actual delays to show reliability.
+- Exports trained models and predictions for reuse, making it part of a scalable timing analysis pipeline.
 
 ## Code 3 – Slack Violation Classification
 **Purpose:** Detect whether paths meet timing constraints.
@@ -44,4 +49,27 @@ This makes the design process **faster, smarter, and more automated**, helping e
 - Binary classifier: Safe (0) / Violation (1).
 - Handles imbalance via resampling.
 - Confusion matrix + Precision/Recall analysis.
+**Purpose:**
+This code checks for timing reliability by predicting whether a circuit path has a slack violation.
+- *Slack* = Required Time − *Actual Delay*.
+- If *Slack* is negative, the circuit cannot meet its timing requirements → violation.
+- If *Slack* is positive, the design is safe.
+
+**Outcome:**
+- Converts delay data into a binary classification problem:
+  ```
+  0 = Safe Path
+  1 = Timing Violation
+  ```
+- Handles class imbalance with resampling (important for real-world skewed datasets).
+- Evaluates models using Accuracy, Precision, Recall, and F1-score.
+- Provides confusion matrices for interpretability.
+- Saves trained models and prediction logs, making it useful for circuit reliability verification.
+
+**In summary:**
+- Code 1 **(Logic Depth)** → *How deep is the logic?*
+- Code 2 **(Propagation Delay)** → *How long does it take signals to travel?*
+- Code 3 **(Slack Violation)** → *Is the circuit safe or unsafe in terms of timing?*
+
+Together, these form a mini end-to-end EDA-inspired ML toolkit for predicting and verifying key performance metrics of combinational circuits.
   
