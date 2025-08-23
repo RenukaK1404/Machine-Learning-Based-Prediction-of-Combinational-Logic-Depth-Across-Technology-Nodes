@@ -28,7 +28,7 @@ This makes the design process **faster, smarter, and more automated**, helping e
 **Outcome:**
 - Trains ML models on a dataset of logic features.
 - Compares performance of Random Forest vs Gradient Boosting using metrics like MAE, MSE, and R² score.
-- Identifies which circuit features contribute most to logic depth across 14nm → 180nm nodes.
+- Identifies which circuit features contribute most to logic depth across nodes.
 - Generates predictions on new unseen datasets, helping in early design evaluation.
 
 ## Code 2 – Propagation Delay Prediction
