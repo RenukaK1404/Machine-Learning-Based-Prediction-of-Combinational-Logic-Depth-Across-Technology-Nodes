@@ -1,5 +1,5 @@
 # Machine-Learning-Based-Prediction-of-Combinational-Logic-Depth-Across-Technology-Nodes
-Machine learning-based prediction of combinational logic depth across multiple semiconductor technology nodes (14nm–180nm). The project applies data-driven models to estimate circuit depth, enabling faster, more efficient VLSI design optimization.
+Machine learning-based prediction of propagation delay and combinational logic depth across semiconductor nodes (14nm–180nm). The propagation delay model works robustly across all nodes, while the logic depth classifier is optimized for advanced nodes (14nm, 28nm) and is being refined for broader applicability. This project leverages data-driven models to estimate circuit depth, supporting faster and more efficient VLSI design optimization.
 
 ## INTRODUCTION
 Every digital device you use—your phone, laptop, or smartwatch—runs on **logic circuits** built from simple gates like AND, OR, and NOT.  
@@ -39,16 +39,12 @@ This code predicts the propagation delay of circuits, i.e., how long it takes fo
 
 **Outcome:**
 - Uses ML regression (Random Forest and Gradient Boosting) to model timing delays.
+- Works seamlessly across all technology nodes (14nm–180nm).
 - Provides error metrics (MAE, MSE, R²) for accuracy assessment.
 - Visualizes predicted vs actual delays to show reliability.
 - Exports trained models and predictions for reuse, making it part of a scalable timing analysis pipeline.
 
 ## Code 3 – Slack Violation Classification
-**Purpose:** Detect whether paths meet timing constraints.
-**Outcome:**
-- Binary classifier: Safe (0) / Violation (1).
-- Handles imbalance via resampling.
-- Confusion matrix + Precision/Recall analysis.
 **Purpose:**
 This code checks for timing reliability by predicting whether a circuit path has a slack violation.
 - *Slack* = Required Time − *Actual Delay*.
@@ -56,17 +52,53 @@ This code checks for timing reliability by predicting whether a circuit path has
 - If *Slack* is positive, the design is safe.
 
 **Outcome:**
-- Converts delay data into a binary classification problem:
-  ```
-  0 = Safe Path
-  1 = Timing Violation
-  ```
+- Optimized primarily for advanced nodes (14nm, 28nm).
+- Converts delay data into a binary classification problem: 0 = Safe Path; 1 = Timing Violation
 - Handles class imbalance with resampling (important for real-world skewed datasets).
 - Evaluates models using Accuracy, Precision, Recall, and F1-score.
 - Provides confusion matrices for interpretability.
 - Saves trained models and prediction logs, making it useful for circuit reliability verification.
 
-**In summary:**
+## HOW TO USE
+**1. Clone the Repository**
+   ```
+   git clone https://github.com/RenukaK1404/Machine-Learning-Based-Prediction-of-Combinational-Logic-Depth-Across-Technology-Nodes.git
+   cd Machine-Learning-Based-Prediction-of-Combinational-Logic-Depth-Across-Technology-Nodes
+   ```
+**2. Install dependencies**
+   ```
+   pip install pandas numpy scikit-learn matplotlib seaborn joblib
+   ```
+**3. Prepare your dataset:**
+
+Ensure to place all these datasets in the same folder as the code
+1. combinational_logic_dataset.csv
+2. combinational_logic_dataset_predictions.csv
+3. combinational_logic_depth_14nm.csv
+4. combinational_logic_depth_28nm.csv
+5. combinational_logic_depth_45nm.csv
+6. combinational_logic_depth_90nm.csv
+7. combinational_logic_depth_180nm.csv
+
+**4. Run the scripts**
+   - Logic Depth Prediction
+     ```
+     python Logic-Depth-Prediction.py
+     ```
+   - Propagation Delay Prediction
+     ```
+     python Predict-Propagation-Delay.py
+     ```
+   - Slack Violation Classification
+     ```
+     python Slack-Violation-Classifier.py
+     ```
+Each script will:
+- Train models automatically.
+- Show evaluation metrics & plots.
+- Save trained models (.pkl) and prediction results (.csv).
+
+## IN SUMMARY:
 - Code 1 **(Logic Depth)** → *How deep is the logic?*
 - Code 2 **(Propagation Delay)** → *How long does it take signals to travel?*
 - Code 3 **(Slack Violation)** → *Is the circuit safe or unsafe in terms of timing?*
